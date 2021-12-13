@@ -11,8 +11,8 @@ class CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var label: UILabel!
 }
-extension CollectionViewCell{
-    func setContentWithData(cellType: HomePageCollectionType){
+extension CollectionViewCell {
+    func setContentWithData(cellType: HomePageCollectionType) {
         label.text = cellType.text
     }
 }

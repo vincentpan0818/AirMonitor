@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum SettingPageTableType: CaseIterable{
+enum SettingPageTableType: CaseIterable {
     case pm25
     case aqi
     case rain
@@ -17,9 +17,8 @@ enum SettingPageTableType: CaseIterable{
     case contact
     case about
     
-    
-    var text: String{
-        switch self{
+    var text: String {
+        switch self {
         case .pm25:
             return "PM25"
         case .aqi:
@@ -36,7 +35,6 @@ enum SettingPageTableType: CaseIterable{
             return "聯絡開發者"
         case .about:
             return "版本號"
-        
         }
     }
 }
@@ -48,7 +46,6 @@ class SettingViewController: UIViewController {
     let settingTypeArray: [SettingPageTableType] = SettingPageTableType.allCases
     
     var gradientLayer: CAGradientLayer!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,15 +63,13 @@ class SettingViewController: UIViewController {
     }
     
     func createGradientLayer() {
-        //let backgroundView = UIView()
         gradientLayer = CAGradientLayer()
         gradientLayer.colors = [UIColor.gray.cgColor, UIColor.orange.cgColor]
         gradientLayer.frame = self.view.bounds
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    func tableViewColor(){
-
+    func tableViewColor() {
         let backgroundView = UIView()
         gradientLayer = CAGradientLayer()
         gradientLayer.colors = [UIColor.white.cgColor, UIColor.orange.cgColor]
@@ -83,48 +78,26 @@ class SettingViewController: UIViewController {
         settingTableView.backgroundView = backgroundView
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
-
-extension SettingViewController: UITableViewDataSource,UITableViewDelegate{
+extension SettingViewController: UITableViewDataSource,UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return settingTypeArray.count
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
         return 5
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        settingTableView.frame = settingTableView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
-//    }
-
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingCell" , for: indexPath) as! SettingTableViewCell
         
         cell.setContentWithData(cellType: settingTypeArray[indexPath.row])
-        
-        
         cell.backgroundColor = UIColor.white
         cell.layer.borderColor = UIColor.black.cgColor
         cell.layer.borderWidth = 0.5
@@ -136,10 +109,8 @@ extension SettingViewController: UITableViewDataSource,UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let currentType = settingTypeArray[indexPath.row]
-        
-        switch currentType{
+        switch currentType {
         case .pm25:
             routeToPM25()
         case .aqi:
@@ -159,130 +130,98 @@ extension SettingViewController: UITableViewDataSource,UITableViewDelegate{
         }
     }
     
-    
 }
 
 //MARK: Route Action
-extension SettingViewController{
-    
-    func routeToPM25(){
-        
-        if let url = URL(string: "https://zh.wikipedia.org/wiki/%E6%87%B8%E6%B5%AE%E7%B2%92%E5%AD%90")
-        {
-            if #available(iOS 10.0, *)
-            {
+extension SettingViewController {
+    func routeToPM25() {
+        if let url = URL(string: "https://zh.wikipedia.org/wiki/%E6%87%B8%E6%B5%AE%E7%B2%92%E5%AD%90") {
+            if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:])
-            }
-            else
-            {
+            } else {
                 UIApplication.shared.openURL(url)
             }
         }
     }
     
-    func routeToAqi(){
-        
-        if let url = URL(string: "https://zh.wikipedia.org/wiki/%E7%A9%BA%E6%B0%A3%E5%93%81%E8%B3%AA%E6%8C%87%E6%A8%99")
-        {
-            if #available(iOS 10.0, *)
-            {
+    func routeToAqi() {
+        if let url = URL(string: "https://zh.wikipedia.org/wiki/%E7%A9%BA%E6%B0%A3%E5%93%81%E8%B3%AA%E6%8C%87%E6%A8%99") {
+            if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:])
-            }
-            else
-            {
+            } else {
                 UIApplication.shared.openURL(url)
             }
         }
     }
     
-    func routeToRain(){
-        
-        if let url = URL(string: "https://zh.wikipedia.org/wiki/%E9%85%B8%E9%9B%A8")
-        {
-            if #available(iOS 10.0, *)
-            {
+    func routeToRain() {
+        if let url = URL(string: "https://zh.wikipedia.org/wiki/%E9%85%B8%E9%9B%A8") {
+            if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:])
-            }
-            else
-            {
+            } else {
                 UIApplication.shared.openURL(url)
             }
         }
     }
     
-    func routeToO3(){
-        
-        if let url = URL(string: "https://zh.wikipedia.org/wiki/%E8%87%AD%E6%B0%A7")
-        {
-            if #available(iOS 10.0, *)
-            {
+    func routeToO3() {
+        if let url = URL(string: "https://zh.wikipedia.org/wiki/%E8%87%AD%E6%B0%A7") {
+            if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:])
-            }
-            else
-            {
+            } else {
                 UIApplication.shared.openURL(url)
             }
         }
     }
     
     func routeToAppStore() {
-        
         let url = URL(string: "itms-apps://itunes.apple.com/app/id1580204319")
         // 注意: 跳轉之前, 可以使用 canOpenURL: 判斷是否可以跳轉
         if !UIApplication.shared.canOpenURL(url!) {
-             // 不能跳轉就不要往下執行了
-             return
+            // 不能跳轉就不要往下執行了
+            return
         }
         if #available(iOS 10.0, *) {
-          
-              UIApplication.shared.open(url!, options: [:]) { (success) in
-                   if (success) {
-                        print("10以後可以跳轉url")
-                   }else{
-                        print("10以後不能完成跳轉")
-                   }
-               }
+            UIApplication.shared.open(url!, options: [:]) { (success) in
+                if (success) {
+                    print("10以後可以跳轉url")
+                } else {
+                    print("10以後不能完成跳轉")
+                }
+            }
         } else {
-               // Fallback on earlier versions
-               let success = UIApplication.shared.openURL(url!)
-               if (success) {
-                     print("10以下可以跳轉")
-               }else{
-                     print("10以下不能完成跳轉")
-               }
-         }
+            // Fallback on earlier versions
+            let success = UIApplication.shared.openURL(url!)
+            if (success) {
+                print("10以下可以跳轉")
+            } else {
+                print("10以下不能完成跳轉")
+            }
+        }
     }
     
-    func routeToPrivacy(){
-        
-        if let url = URL(string: "https://vincentpan0818.wixsite.com/website/about")
-        {
-            if #available(iOS 10.0, *)
-            {
+    func routeToPrivacy() {
+        if let url = URL(string: "https://vincentpan0818.wixsite.com/website/about") {
+            if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:])
-            }
-            else
-            {
+            } else {
                 UIApplication.shared.openURL(url)
             }
         }
     }
     
-    func routeToContact(){
-        
-        DispatchQueue.main.async { [weak self] in
+    func routeToContact() {
+        DispatchQueue.main.async{ [weak self] in
             let contactVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "contactVC") as! ContactViewController
             self?.navigationController?.pushViewController(contactVC, animated: true)
         }
     }
     
-    func routeToAbout(){
-        
-        DispatchQueue.main.async { [weak self] in
+    func routeToAbout() {
+        DispatchQueue.main.async{ [weak self] in
             let aboutVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "aboutVC") as! AboutViewController
             self?.navigationController?.pushViewController(aboutVC, animated: true)
         }
     }
-    
     
 }

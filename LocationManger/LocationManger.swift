@@ -8,9 +8,7 @@
 import UIKit
 import CoreLocation
 
-
 class LocationMannger: NSObject {
-    
     static let shared = LocationMannger()
     
     private var locationManger = CLLocationManager()
@@ -25,14 +23,13 @@ class LocationMannger: NSObject {
         locationManger.desiredAccuracy = kCLLocationAccuracyBest
     }
     
-    func askPermission(){
-        
-        if #available(iOS 14.0, *){
+    func askPermission() {
+        if #available(iOS 14.0, *) {
             locationAuthorizationStatus = locationManger.authorizationStatus
-        }else{
+        } else {
             locationAuthorizationStatus = CLLocationManager.authorizationStatus()
         }
-        switch locationAuthorizationStatus{
+        switch locationAuthorizationStatus {
         case .notDetermined:
             //還沒決定
             locationManger.requestWhenInUseAuthorization()
@@ -50,17 +47,14 @@ class LocationMannger: NSObject {
 }
 
 //MARK: CLLocationManagerDelegate
-
-extension LocationMannger: CLLocationManagerDelegate{
-    
+extension LocationMannger: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        guard userCoordinate == nil else{
+        guard userCoordinate == nil else {
             return
         }
         userCoordinate = manager.location?.coordinate
         manager.stopUpdatingLocation()
-        if let lat = userCoordinate?.latitude , let lon = userCoordinate?.longitude{
+        if let lat = userCoordinate?.latitude , let lon = userCoordinate?.longitude {
             print("User lat: \(lat)") //緯度
             print("User lon: \(lon)") //經度
         }
@@ -68,24 +62,22 @@ extension LocationMannger: CLLocationManagerDelegate{
     
     //舊的,ios 14以上-棄用
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        
         locationAuthorizationStatus = status
         
-        if status == .authorizedAlways || status == .authorizedWhenInUse{
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
             
-        }else if status == .denied || status == .restricted{
+        } else if status == .denied || status == .restricted {
             
-        }else{
+        } else {
             
         }
     }
     
     //新的,ios 14以上
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        
-        if #available(iOS 14.0, *){
+        if #available(iOS 14.0, *) {
             let accuracyAuthorization = manager.accuracyAuthorization
-            switch accuracyAuthorization{
+            switch accuracyAuthorization {
             case .fullAccuracy:
                 break
             case .reducedAccuracy:
@@ -93,7 +85,7 @@ extension LocationMannger: CLLocationManagerDelegate{
             default:
                 break
             }
-        }else{
+        } else {
             
         }
     }

@@ -14,13 +14,11 @@ struct O3ResultModel: Codable {
         case records = "records"
     }
     
-    init(from decoder: Decoder) throws{
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         records = try container.decodeIfPresent([O3ResultRecordsModel].self, forKey: .records) ?? []
     }
 }
-
-
 
 struct O3ResultRecordsModel: Codable {
     let siteName: String?
@@ -51,7 +49,7 @@ struct O3ResultRecordsModel: Codable {
     
     var distence: Double = 0.0
     
-    enum CodingKeys: String, CodingKey{
+    enum CodingKeys: String, CodingKey {
         case siteName = "SiteName"
         case county = "County"
         case aqi = "AQI"

@@ -20,8 +20,6 @@ struct AQIResultModel: Codable {
     }
 }
 
-
-
 struct AQIResultRecordsModel: Codable {
     let siteName: String?
     let county: String?
@@ -51,7 +49,7 @@ struct AQIResultRecordsModel: Codable {
     
     var distence: Double = 0.0
     
-    enum CodingKeys: String, CodingKey{
+    enum CodingKeys: String, CodingKey {
         case siteName = "SiteName"
         case county = "County"
         case aqi = "AQI"
@@ -103,7 +101,7 @@ struct AQIResultRecordsModel: Codable {
          latitude: String = "",
          siteId: String = "",
          importDate: String = ""
-         ){
+         ) {
         self.siteName = siteName
         self.county = county
         self.aqi = aqi

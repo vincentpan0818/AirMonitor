@@ -18,9 +18,9 @@ class RainViewController: UIViewController {
 
         title = "酸雨指數"
         
-        
         rainTableView.dataSource = self
         rainTableView.delegate = self
+        
         let sortBarBtnItem = UIBarButtonItem(title: "排序", style: .plain, target: self, action: #selector(didtapSort))
         self.navigationItem.rightBarButtonItem = sortBarBtnItem
         self.rainTableView.reloadData()
@@ -28,6 +28,7 @@ class RainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         self.navigationController?.navigationBar.tintColor = .black
         self.navigationController?.navigationBar.barTintColor = .orange
         self.tabBarController?.tabBar.barTintColor = .orange
@@ -35,11 +36,12 @@ class RainViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         self.navigationController?.navigationBar.barTintColor = .white
         self.tabBarController?.tabBar.barTintColor = .white
     }
     
-    @objc func didtapSort(){
+    @objc func didtapSort() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "依照酸雨指數排序", style: .default, handler: { action in
             print("開始依照酸雨指數排序")
@@ -58,35 +60,29 @@ class RainViewController: UIViewController {
         }
     }
     
-    func sortRain(){
-        
+    func sortRain() {
         rainResult.sort { rainResult1, rainResult2 in
-            if let result1 = Float(rainResult1.concentration), let result2 = Float(rainResult2.concentration){
+            if let result1 = Float(rainResult1.concentration), let result2 = Float(rainResult2.concentration) {
                 return result1 > result2
-            }else{
+            } else {
                 return false
             }
         }
-        
     }
     
-    func sortCountry(){
-        
+    func sortCountry() {
         rainResult.sort { countyResult1, countyResult2 in
-            if let result1 = Int(countyResult1.siteId), let result2 = Int(countyResult2.siteId){
+            if let result1 = Int(countyResult1.siteId), let result2 = Int(countyResult2.siteId) {
                 return result1 < result2
-            }else{
+            } else {
                 return false
             }
         }
     }
-
-   
 
 }
 
-extension RainViewController: UITableViewDelegate, UITableViewDataSource{
-    
+extension RainViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -96,18 +92,15 @@ extension RainViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: RainTableViewCell.id , for: indexPath) as! RainTableViewCell
         cell.countyLabel.text = rainResult[indexPath.row].county
         cell.siteLabel.text = rainResult[indexPath.row].siteName
         cell.rainLabel.text = rainResult[indexPath.row].concentration
         
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return 100
     }
         

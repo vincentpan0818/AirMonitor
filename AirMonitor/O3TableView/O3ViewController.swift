@@ -16,44 +16,40 @@ class O3ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         title = "臭氧(O3)指數"
         self.navigationController?.navigationBar.tintColor = .black
-        
         
         o3TableView.dataSource = self
         o3TableView.delegate = self
         
-                
         let sortBarBtnItem = UIBarButtonItem(title: "排序", style: .plain, target: self, action: #selector(didtapSort))
         self.navigationItem.rightBarButtonItem = sortBarBtnItem
-        
-        for (index, item) in o3Result.enumerated(){
-            if let o3 = item.o3, o3 == ""{
+        for (index, item) in o3Result.enumerated() {
+            if let o3 = item.o3, o3 == "" {
                 o3Result[index].o3 = "0"
             }
         }
-        
         self.o3TableView.reloadData()
         LocationMannger.shared.askPermission()
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         self.navigationController?.navigationBar.tintColor = .black
         self.navigationController?.navigationBar.barTintColor = .orange
         self.tabBarController?.tabBar.barTintColor = .orange
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         self.navigationController?.navigationBar.barTintColor = .white
         self.tabBarController?.tabBar.barTintColor = .white
     }
 
-    @objc func didtapSort(){
+    @objc func didtapSort() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "依照臭氧(O3)指數排序", style: .default, handler: { action in
             print("開始依照臭氧(O3)指數排序")
@@ -71,33 +67,27 @@ class O3ViewController: UIViewController {
         }
     }
     
-    func sortO3(){
-        
+    func sortO3() {
         o3Result.sort { o3Result1, o3Result2 in
-            if let aqiR1 = Float(o3Result1.o3 ?? ""), let aqiR2 = Float(o3Result2.o3 ?? ""){
+            if let aqiR1 = Float(o3Result1.o3 ?? ""), let aqiR2 = Float(o3Result2.o3 ?? "") {
                 return aqiR1 > aqiR2
-            }else{
+            } else {
                 return false
             }
         }
-        DispatchQueue.main.async{
+        DispatchQueue.main.async {
             self.o3TableView.reloadData()
         }
-        
     }
     
-    func checkDistanceAndSort(){
-        
-        if let userCoordinate = LocationMannger.shared.userCoordinate{
-            
+    func checkDistanceAndSort() {
+        if let userCoordinate = LocationMannger.shared.userCoordinate {
             let currentUserLocation = CLLocation(latitude: userCoordinate.latitude, longitude: userCoordinate.longitude)
-            
-            for i in 0..<o3Result.count{
-                
+            for i in 0..<o3Result.count {
                 if let targetLon = o3Result[i].longitude,
                    let targetLat = o3Result[i].latitude,
                    let siteName = o3Result[i].siteName{
-                    guard targetLon != "" && targetLat != "", let lon = Double(targetLon), let lat = Double(targetLat) else{
+                    guard targetLon != "" && targetLat != "", let lon = Double(targetLon), let lat = Double(targetLat) else {
                         print("沒有經緯度")
                         return
                     }
@@ -113,31 +103,25 @@ class O3ViewController: UIViewController {
             DispatchQueue.main.async {
                 self.o3TableView.reloadData()
             }
-            
-        }else{
+        } else {
             print("沒有經緯度")
         }
     }
     
-
 }
 
-
-extension O3ViewController: UITableViewDataSource,UITableViewDelegate{
+extension O3ViewController: UITableViewDataSource,UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return o3Result.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: O3TableViewCell.id , for: indexPath) as! O3TableViewCell
-        
         cell.countyLabel.text = o3Result[indexPath.row].county
         cell.siteLabel.text = o3Result[indexPath.row].siteName
         cell.o3Label.text = o3Result[indexPath.row].o3
@@ -145,14 +129,8 @@ extension O3ViewController: UITableViewDataSource,UITableViewDelegate{
         return cell
     }
     
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //點擊
-    }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return 100
     }
+    
 }
-

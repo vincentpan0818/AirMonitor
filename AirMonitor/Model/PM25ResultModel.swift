@@ -12,20 +12,17 @@ struct PM25ResultModel: Codable {
     let records: [PM25ResultRecordsModel]?
 }
 
-
-
 struct PM25ResultRecordsModel: Codable {
     let siteId: String
-    let siteName : String
-    let county : String
-    let itemId : String
-    let itemName : String
-    let itemEngName : String
-    let itemUnit : String
-    let monitorDate : String
-    let concentration : String
+    let siteName: String
+    let county: String
+    let itemId: String
+    let itemName: String
+    let itemEngName: String
+    let itemUnit: String
+    let monitorDate: String
+    let concentration: String
 
-    
     enum CodingKeys: String, CodingKey {
         case siteId = "SiteId"
         case siteName = "SiteName"

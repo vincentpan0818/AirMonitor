@@ -14,16 +14,5 @@ class RainTableViewCell: UITableViewCell {
     @IBOutlet weak var countyLabel: UILabel!
     @IBOutlet weak var siteLabel: UILabel!
     @IBOutlet weak var rainLabel: UILabel!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+    
 }
