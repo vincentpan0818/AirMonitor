@@ -15,10 +15,15 @@ class ContactViewController: UIViewController {
         super.viewDidLoad()
 
         title = "聯絡開發者"
-        self.navigationController?.navigationBar.tintColor = .black
-        
         emailLabel.text = "Email: vincentpan0818@gmail.com"
-        backgroundColor()
+        let currentMode = UITraitCollection.current.userInterfaceStyle
+        if currentMode == .light {
+            self.navigationController?.navigationBar.tintColor = .black
+            self.navigationController?.navigationBar.backgroundColor = .clear
+            backgroundColor()
+        } else {
+            self.navigationController?.navigationBar.tintColor = .white
+        }
     }
     
     func backgroundColor() {

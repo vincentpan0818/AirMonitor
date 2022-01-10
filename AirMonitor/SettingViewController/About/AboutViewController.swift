@@ -15,9 +15,16 @@ class AboutViewController: UIViewController {
         super.viewDidLoad()
 
         title = "版本號"
-        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.navigationBar.tintColor = .white
         version()
-        backgroundColor()
+        let currentMode = UITraitCollection.current.userInterfaceStyle
+        if currentMode == .light {
+            self.navigationController?.navigationBar.tintColor = .black
+            self.navigationController?.navigationBar.backgroundColor = .clear
+            backgroundColor()
+        } else {
+            self.navigationController?.navigationBar.tintColor = .white
+        }
     }
     
     func version() {

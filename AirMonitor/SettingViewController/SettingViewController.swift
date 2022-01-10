@@ -58,8 +58,13 @@ class SettingViewController: UIViewController {
         
         let nib = UINib(nibName: "SettingTableViewCell", bundle: nil)
         settingTableView.register(nib, forCellReuseIdentifier: "settingCell")
-        createGradientLayer()
-        tableViewColor()
+                
+        let currentMode = UITraitCollection.current.userInterfaceStyle
+        if currentMode == .light {
+            self.navigationController?.navigationBar.backgroundColor = .white
+            createGradientLayer()
+            tableViewColor()
+        }
     }
     
     func createGradientLayer() {
@@ -88,10 +93,6 @@ extension SettingViewController: UITableViewDataSource,UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return settingTypeArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

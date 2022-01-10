@@ -38,16 +38,24 @@ class AQIViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBar.tintColor = .black
-        self.navigationController?.navigationBar.barTintColor = .orange
-        self.tabBarController?.tabBar.barTintColor = .orange
+        let currentMode = UITraitCollection.current.userInterfaceStyle
+        if currentMode == .light {
+            self.navigationController?.navigationBar.tintColor = .black
+            self.navigationController?.navigationBar.barTintColor = .orange
+            self.tabBarController?.tabBar.barTintColor = .orange
+        } else {
+            self.navigationController?.navigationBar.tintColor = .white
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        self.navigationController?.navigationBar.barTintColor = .white
-        self.tabBarController?.tabBar.barTintColor = .white
+        if overrideUserInterfaceStyle == .light {
+            self.navigationController?.navigationBar.barTintColor = .white
+            self.tabBarController?.tabBar.barTintColor = .white
+        }
+
     }
     
     
