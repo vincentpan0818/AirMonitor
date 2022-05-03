@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 enum HomePageCollectionType: CaseIterable {
     case pm25
@@ -104,28 +105,23 @@ extension HomePageViewController: UICollectionViewDelegate, UICollectionViewData
 extension HomePageViewController {
     //參數可以自訂帶
     func routeToPM25Page() {
-        let urlString: String =  "https://data.epa.gov.tw/api/v1/aqx_p_322?api_key=ac1c105b-1b2a-4970-bca9-53d83d3dcb95"
-        guard let url = URL(string: urlString) else {
-            return
-        }
-        let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
-            if let error = error {
+        let urlString =  "https://data.epa.gov.tw/api/v1/aqx_p_322?api_key=ac1c105b-1b2a-4970-bca9-53d83d3dcb95"
+        AF.request(urlString, method: .get).response { data in
+            if let error = data.error {
                 print("error: \(error)")
                 self.errorHandle()
                 return
             }
-            
-            if let loadData = data {
+            if let loadData = data.data {
                 do {
                     let okData = try JSONDecoder().decode(PM25ResultModel.self, from: loadData)
-                    print("\(okData)")
                     self.pm25optionalBinding(data: okData)
                 } catch {
-                    print("\(error)")
+                    print(error)
+                    self.errorHandle()
                 }
             }
         }
-        task.resume()
     }
     
     func pm25optionalBinding(data: PM25ResultModel) {
@@ -141,26 +137,21 @@ extension HomePageViewController {
     
     func routeToAQIPage() {
         let urlString: String =  "https://data.epa.gov.tw/api/v1/aqx_p_432?api_key=ac1c105b-1b2a-4970-bca9-53d83d3dcb95"
-        guard let url = URL(string: urlString) else {
-            return
-        }
-        let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
-            if let error = error {
+        AF.request(urlString, method: .get).response { data in
+            if let error = data.error {
                 print("error: \(error)")
                 self.errorHandle()
                 return
             }
-            if let loadData = data {
+            if let loadData = data.data {
                 do {
                     let okData = try JSONDecoder().decode(AQIResultModel.self, from: loadData)
-                    print("\(okData)")
                     self.aqioptionalBinding(data: okData)
                 } catch {
-                    print("\(error)")
+                    print(error)
                 }
             }
         }
-        task.resume()
     }
     
     func aqioptionalBinding(data: AQIResultModel) {
@@ -176,26 +167,21 @@ extension HomePageViewController {
     
     func routeToRainPage() {
         let urlString: String = "https://data.epa.gov.tw/api/v1/aqx_p_314?api_key=ac1c105b-1b2a-4970-bca9-53d83d3dcb95"
-        guard let url = URL(string: urlString) else {
-            return
-        }
-        let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
-            if let error = error {
+        AF.request(urlString, method: .get).response { data in
+            if let error = data.error {
                 print("error: \(error)")
                 self.errorHandle()
                 return
             }
-            if let loadData = data {
+            if let loadData = data.data {
                 do {
                     let okData = try JSONDecoder().decode(RainResultModel.self, from: loadData)
-                    print("\(okData)")
                     self.rainoptionalBinding(data: okData)
                 } catch {
-                    print("\(error)")
+                    print(error)
                 }
             }
         }
-        task.resume()
     }
     
     func rainoptionalBinding(data: RainResultModel) {
@@ -211,26 +197,21 @@ extension HomePageViewController {
 
     func routeToO3Page() {
         let urlString: String = "https://data.epa.gov.tw/api/v1/aqx_p_432?api_key=ac1c105b-1b2a-4970-bca9-53d83d3dcb95"
-        guard let url = URL(string: urlString) else {
-            return
-        }
-        let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
-            if let error = error {
+        AF.request(urlString, method: .get).response { data in
+            if let error = data.error {
                 print("error: \(error)")
                 self.errorHandle()
                 return
             }
-            if let loadData = data {
+            if let loadData = data.data {
                 do {
                     let okData = try JSONDecoder().decode(O3ResultModel.self, from: loadData)
-                    print("\(okData)")
                     self.o3optionalBinding(data: okData)
                 } catch {
-                    print("\(error)")
+                    print(error)
                 }
             }
         }
-        task.resume()
     }
     
     func o3optionalBinding(data: O3ResultModel) {
